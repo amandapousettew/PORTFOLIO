@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amanda Pousette — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo">Amanda&nbsp;Pousette<span style="color:var(--acc)">.</span>
+    <div class="logo-tag">Creative direction ·<br>AI-integrated production</div>
+  </div>
+  <div class="links">
+    <a href="#work">Work</a><a href="#motion">Showreel</a><a href="#contact">Contact</a>
+  </div>
+  <a class="cta" href="mailto:amanda.pousette.w@gmail.com?subject=Let%27s%20make%20something">Got a project? Let's talk</a>
+</nav>
+
+<!-- ================= HERO (pinnad scroll-sekvens, ~4 skärmhöjder) ================= -->
+<header class="hero">
+  <div class="hero-pin">
+    <!-- SWAP: sätt data-img="assets/img/hero.jpg" på canvasen så warpas din bild.
+         Utan data-img används den mörka gradient-platshållaren. -->
+    <div class="hero-bg"><div class="ph"></div><canvas id="heroWarp"></canvas></div>
+
+    <div class="badge">EST. WORK<br>LISBON / REMOTE<br>11+ YEARS</div>
+
+    <!-- Scen 1: namn -->
+    <div class="scene s1">
+      <div class="kicker">Creative Director · AI-integrated production</div>
+      <h1>Amanda<br>Pousette<span>.</span></h1>
+      <div class="type-line" id="typeLine"></div>
+    </div>
+
+    <!-- Scen 2: mono-rader + kort (à la sentients event-kort) -->
+    <div class="scene s2">
+      <div class="sub">// creative direction, brand campaigns and film<br>// AI node-based production workflow<br>// Lisbon — open to freelance and remote across the Nordics and Europe</div>
+      <aside class="hcard">
+        <div class="hcard-top"><strong>Showreel</strong><span>2026</span></div>
+        <p>Campaigns, film and set design — eleven years of work, cut down to what matters.</p>
+        <a class="plus" href="#motion">Watch</a>
+      </aside>
+    </div>
+
+    <!-- Scen 3: stort statement -->
+    <div class="scene s3">
+      <div class="eyebrow">// Approach</div>
+      <p class="hstatement">Eleven years of brand craft, rebuilt on an AI node-based pipeline. The taste is human. The speed is not.</p>
+    </div>
+
+    <!-- Scen 4: centrerad mono-etikett in mot innehållet -->
+    <div class="scene s4">
+      <div class="hlabel">// Selected work ↓</div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= MEDIA STRIP ================= -->
+<!-- SWAP: byt varje <canvas> mot <img src="assets/img/dinbild.jpg" alt=""> -->
+<div class="strip">
+  <div class="strip-track" id="stripTrack">
+    <figure><canvas class="soft" data-h="95"></canvas><figcaption>// field_01</figcaption></figure>
+    <figure><canvas class="soft" data-h="205"></canvas><figcaption>// field_02</figcaption></figure>
+    <figure><canvas class="soft" data-h="28"></canvas><figcaption>// field_03</figcaption></figure>
+    <figure><canvas class="soft" data-h="150"></canvas><figcaption>// field_04</figcaption></figure>
+    <figure><canvas class="soft" data-h="330"></canvas><figcaption>// field_05</figcaption></figure>
+    <figure><canvas class="soft" data-h="60"></canvas><figcaption>// field_06</figcaption></figure>
+  </div>
+</div>
+<div class="roles">
+  <span>Creative direction</span><span>Brand campaigns</span><span>Film direction</span>
+  <span>Set design</span><span>Content strategy</span><span>AI production</span>
+</div>
+
+<!-- ================= MISSION ================= -->
+<section>
+  <div class="eyebrow reveal">Approach</div>
+  <h2 class="statement reveal">AI changes how fast I work, not what I accept. Concept, craft and final cut still answer to the same eye.</h2>
+  <a class="plus row-link reveal" href="#contact">Work with me</a>
+</section>
+
+<!-- ================= WORK ================= -->
+<section id="work" style="padding-top:0">
+  <div class="eyebrow reveal">// Work</div>
+  <h2 class="statement reveal">Selected work</h2>
+  <div class="cards">
+    <!-- SWAP: byt <canvas> mot <img src="assets/img/..."> eller <video src="assets/video/..." autoplay muted loop playsinline> -->
+    <article class="cardx reveal" data-speed="0.03">
+      <div class="vis"><canvas class="soft" data-h="200"></canvas></div>
+      <div class="body">
+        <span class="tag">// Campaign / Client</span>
+        <h3>IKEA</h3>
+        <p>Campaign direction and film — everyday home moments turned into brand storytelling. [Verifiera: roll, år, leverans.]</p>
+        <a class="plus" href="case-ikea.html">Case study</a>
+      </div>
+    </article>
+    <article class="cardx reveal" data-speed="-0.02">
+      <div class="vis"><canvas class="soft" data-h="120"></canvas></div>
+      <div class="body">
+        <span class="tag">// Campaign / Client</span>
+        <h3>Adidas</h3>
+        <p>Concept and creative direction for product-led campaign content across channels. [Verifiera: roll, år, leverans.]</p>
+        <a class="plus" href="case-adidas.html">Case study</a>
+      </div>
+    </article>
+    <article class="cardx reveal" data-speed="0.025">
+      <div class="vis"><canvas class="soft" data-h="20"></canvas></div>
+      <div class="body">
+        <span class="tag">// Projekt / År</span>
+        <h3>[Projekt 3]</h3>
+        <p>[Amanda fyller i: titel, klient, år och en mening om arbetet.]</p>
+        <a class="plus" href="case-03.html">Case study</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= MOTION ================= -->
+<section id="motion">
+  <div class="feature">
+    <div class="eyebrow reveal">Showreel</div>
+    <h2 class="statement reveal">The work. Right now.</h2>
+    <!-- SWAP: byt <canvas> mot <video src="assets/video/reel.mp4" autoplay muted loop playsinline> -->
+    <div class="frame reveal" data-speed="0.04">
+      <canvas id="reelCanvas"></canvas>
+      <span class="cap">// showreel — square cut also available</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact">
+  <p class="fs reveal">Let's talk about the next thing.</p>
+  <div style="margin-top:40px;display:flex;gap:22px;flex-wrap:wrap">
+    <a class="plus" href="mailto:amanda.pousette.w@gmail.com">amanda.pousette.w@gmail.com</a>
+    <a class="plus" href="tel:+46738800099">(+46) 738 800 099</a>
+  </div>
+  <div class="cols">
+    <div><span>© 2026 Amanda Pousette</span></div>
+    <div>
+      <a class="plus" href="#work">Work</a>
+      <a class="plus" href="#motion">Showreel</a>
+    </div>
+    <div>
+      <a class="plus" href="https://www.linkedin.com/in/amanda-pousette-w/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

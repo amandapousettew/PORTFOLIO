@@ -1,0 +1,326 @@
+:root{
+  --paper:#FFFFFF;
+  --ink:#000000;
+  --mut:#000000;
+  --acc:#000000;
+  --card:#FFFFFF;
+  --line:rgba(0,0,0,.22);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'Geist',sans-serif;
+  font-size:17px;line-height:1.5;overflow-x:hidden;
+}
+::selection{background:var(--ink);color:var(--paper)}
+.mono{font-family:'Geist Mono',monospace}
+
+a.plus{
+  color:var(--ink);text-decoration:none;
+  font-family:'Geist Mono';font-size:12px;letter-spacing:.12em;
+  text-transform:uppercase;border-bottom:1px solid var(--line);
+  padding-bottom:3px;transition:.25s;
+}
+a.plus::after{content:" [+]";color:var(--mut)}
+a.plus:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ---------- nav ----------
+   Ingen solid platta — progressiv "glas"-blur som tonar ut nedåt (som sentient).
+   Innehållet scrollar in under och blurras/tonar bort.
+   .scrolled (sätts av JS): bara textfärgen växlar vit -> svart. */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 40px;background:transparent;
+}
+nav::before,nav::after{
+  content:"";position:absolute;left:0;right:0;top:0;
+  z-index:-1;pointer-events:none;
+}
+nav::after{
+  height:260%;
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  -webkit-mask-image:linear-gradient(#000 25%,transparent);
+  mask-image:linear-gradient(#000 25%,transparent);
+}
+nav::before{
+  height:170%;
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  -webkit-mask-image:linear-gradient(#000 40%,transparent);
+  mask-image:linear-gradient(#000 40%,transparent);
+}
+nav .logo{font-weight:600;font-size:15px;letter-spacing:.01em;white-space:nowrap;
+  color:#fff;transition:color .4s}
+nav .logo-tag{
+  margin-top:2px;font-family:'Geist Mono';font-weight:400;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;line-height:1.5;opacity:.65;
+}
+nav .links{
+  position:absolute;left:50%;transform:translateX(-50%);
+  display:flex;gap:36px;
+}
+nav .links a{
+  color:#fff;text-decoration:none;transition:color .4s;
+  font-family:'Geist',sans-serif;font-size:16px;font-weight:500;letter-spacing:0;
+}
+nav .links a:hover{opacity:.6}
+nav .cta{
+  font-family:'Geist',sans-serif;font-size:15px;font-weight:500;
+  color:#fff;background:transparent;border:1.5px solid rgba(255,255,255,.9);
+  text-decoration:none;padding:11px 24px;border-radius:100px;
+  transition:.25s;white-space:nowrap;
+}
+nav .cta:hover{background:#fff;color:var(--ink)}
+nav.scrolled .logo,nav.scrolled .links a{color:var(--ink)}
+nav.scrolled .cta{color:var(--ink);border-color:var(--ink);background:transparent}
+nav.scrolled .cta:hover{background:var(--ink);color:var(--paper)}
+
+/* ---------- hero: pinnad scroll-sekvens ---------- */
+.hero{height:400svh;position:relative;color:#fff}
+.hero-pin{position:sticky;top:0;height:100svh;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background:#101010}
+.hero-bg canvas{
+  position:absolute;inset:0;width:100%;height:100%;display:block;
+  will-change:transform;transform-origin:50% 50%;
+}
+.hero-bg .ph{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(1100px 620px at 72% 18%, #3d3d3d, transparent 62%),
+    radial-gradient(900px 700px at 15% 85%, #2b2b2b, transparent 60%),
+    linear-gradient(160deg,#1d1d1d,#0b0b0b);
+}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.1) 45%,rgba(0,0,0,.4));
+}
+/* ---------- hero-scener (crossfade styrs av JS, barnen staggas av CSS) ---------- */
+.scene{
+  position:absolute;inset:0;z-index:2;padding:140px 40px 80px;
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:0;pointer-events:none;will-change:transform,opacity;
+}
+.scene.on{pointer-events:auto}
+.scene > *{
+  opacity:0;transform:translateY(46px);
+  transition:opacity .9s,transform .9s cubic-bezier(.19,1,.22,1);
+}
+.scene.on > *{opacity:1;transform:none}
+.scene.on > *:nth-child(1){transition-delay:.05s}
+.scene.on > *:nth-child(2){transition-delay:.18s}
+.scene.on > *:nth-child(3){transition-delay:.32s}
+
+.kicker{
+  font-family:'Geist Mono';font-size:12px;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:34px;
+}
+.hero h1{
+  font-size:clamp(56px,12vw,180px);font-weight:600;letter-spacing:-.04em;
+  line-height:.92;
+}
+.hero h1 span{color:#fff}
+.type-line{
+  margin-top:30px;font-family:'Geist Mono';font-size:clamp(14px,1.6vw,18px);
+  color:#fff;min-height:28px;text-transform:uppercase;letter-spacing:.04em;
+}
+.type-line .caret{display:inline-block;width:8px;height:16px;background:#fff;
+  vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero .sub{
+  max-width:460px;color:rgba(255,255,255,.72);
+  font-family:'Geist Mono';font-size:13px;line-height:1.9;text-transform:uppercase;
+}
+.hero .badge{
+  position:absolute;top:120px;right:40px;z-index:3;
+  font-family:'Geist Mono';font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);text-align:right;line-height:2;
+}
+/* scen 2: kort à la sentient */
+.scene.s2{justify-content:center;gap:60px}
+.hcard{
+  border:1px solid rgba(255,255,255,.45);padding:26px 28px 24px;
+  max-width:420px;color:#fff;
+}
+.hcard .hcard-top{
+  display:flex;justify-content:space-between;gap:20px;margin-bottom:40px;
+  font-size:22px;font-weight:500;letter-spacing:-.01em;
+}
+.hcard .hcard-top span{font-family:'Geist Mono';font-size:12px;letter-spacing:.1em;align-self:flex-start}
+.hcard p{font-size:14.5px;color:rgba(255,255,255,.75);margin-bottom:22px}
+.hcard a.plus{color:#fff;border-color:rgba(255,255,255,.4)}
+.hcard a.plus::after{color:rgba(255,255,255,.6)}
+/* scen 3: stort statement */
+.scene.s3 .eyebrow{color:rgba(255,255,255,.65)}
+.hstatement{
+  font-size:clamp(30px,4.8vw,64px);font-weight:500;letter-spacing:-.025em;
+  line-height:1.12;max-width:1000px;
+}
+/* scen 4: centrerad etikett */
+.scene.s4{align-items:center;justify-content:center;text-align:center}
+.hlabel{
+  font-family:'Geist Mono';font-size:14px;letter-spacing:.22em;
+  text-transform:uppercase;color:#fff;
+}
+
+/* ---------- media strip ---------- */
+.strip{overflow:hidden;padding:40px 0;border-top:1px solid var(--line)}
+.strip-track{display:flex;gap:18px;will-change:transform;padding-left:40px}
+.strip figure{
+  flex:0 0 auto;width:300px;aspect-ratio:3/4;overflow:hidden;
+  border-radius:8px;position:relative;background:#DAD9D5;
+}
+.strip canvas,.strip img{width:100%;height:100%;object-fit:cover;display:block}
+.strip figcaption{
+  position:absolute;bottom:10px;left:12px;
+  font-family:'Geist Mono';font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:#fff;mix-blend-mode:difference;
+}
+.roles{
+  display:flex;flex-wrap:wrap;gap:14px 34px;padding:26px 40px;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  font-family:'Geist Mono';font-size:12px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--mut);
+}
+.roles span::before{content:"— ";color:var(--ink)}
+
+/* ---------- sections ---------- */
+section{padding:130px 40px}
+.eyebrow{
+  font-family:'Geist Mono';font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--mut);margin-bottom:22px;
+}
+.statement{
+  font-size:clamp(28px,4.4vw,58px);font-weight:500;letter-spacing:-.025em;
+  line-height:1.12;max-width:1050px;
+}
+.statement + .row-link{margin-top:36px;display:inline-block}
+
+/* ---------- work cards ---------- */
+.cards{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+  max-width:1400px;margin:70px auto 0;
+}
+.cardx{
+  border:1px solid var(--line);border-radius:10px;background:var(--card);
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .5s cubic-bezier(.19,1,.22,1),box-shadow .5s;
+  will-change:transform;
+}
+.cardx:hover{transform:translateY(-6px);box-shadow:0 24px 60px -30px rgba(0,0,0,.28)}
+.cardx .vis{aspect-ratio:16/11;position:relative;overflow:hidden;background:#E2E0DB}
+.cardx .vis canvas,.cardx .vis img,.cardx .vis video{width:100%;height:100%;object-fit:cover;display:block}
+.cardx .body{padding:26px 24px 30px;display:flex;flex-direction:column;gap:12px;flex:1}
+.cardx h3{font-size:24px;font-weight:600;letter-spacing:-.02em}
+.cardx .tag{font-family:'Geist Mono';font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mut)}
+.cardx p{color:var(--mut);font-size:14.5px;flex:1}
+
+/* ---------- feature video ---------- */
+.feature{max-width:1400px;margin:0 auto}
+.feature .frame{
+  margin-top:60px;border-radius:12px;overflow:hidden;position:relative;
+  aspect-ratio:21/9;background:#DAD9D5;will-change:transform;
+}
+.feature canvas,.feature video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.feature .cap{
+  position:absolute;bottom:16px;left:20px;
+  font-family:'Geist Mono';font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:#fff;mix-blend-mode:difference;
+}
+
+/* ---------- log / news ---------- */
+.log{max-width:1100px;margin:0 auto}
+.log-item{
+  display:grid;grid-template-columns:110px 1fr auto;gap:26px;align-items:baseline;
+  padding:30px 0;border-bottom:1px solid var(--line);
+}
+.log-item:first-of-type{border-top:1px solid var(--line)}
+.log-item .slash{font-family:'Geist Mono';font-size:12px;color:var(--mut)}
+.log-item h4{font-size:22px;font-weight:500;letter-spacing:-.015em}
+.log-item p{color:var(--mut);font-size:14px;margin-top:6px;max-width:560px}
+
+/* ---------- footer ---------- */
+footer{
+  background:var(--ink);color:var(--paper);
+  padding:110px 40px 40px;margin-top:60px;border-top:1px solid var(--line);
+}
+footer .fs{
+  font-size:clamp(30px,4.6vw,62px);font-weight:500;letter-spacing:-.025em;
+  line-height:1.1;max-width:900px;
+}
+footer a.plus{color:var(--paper);border-color:rgba(244,243,241,.25)}
+footer a.plus::after{color:rgba(244,243,241,.55)}
+footer a.plus:hover{color:var(--paper);border-color:var(--paper)}
+footer .cols{
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;
+  margin-top:80px;padding-top:30px;border-top:1px solid rgba(244,243,241,.18);
+  font-family:'Geist Mono';font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(244,243,241,.55);
+}
+footer .cols div{display:flex;gap:24px;flex-wrap:wrap}
+
+/* ---------- case pages (layout à la ccooppyy: sticky text vänster, galleri höger) ---------- */
+.case{
+  display:grid;grid-template-columns:400px 1fr;gap:70px;
+  padding:150px 40px 100px;max-width:1600px;margin:0 auto;align-items:start;
+}
+.case-info{position:sticky;top:130px;display:flex;flex-direction:column;gap:24px}
+.case-info .cat{
+  font-family:'Geist Mono';font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--mut);
+}
+.case-info h1{font-size:clamp(38px,4vw,58px);font-weight:600;letter-spacing:-.03em;line-height:1.02}
+.case-info p{color:var(--mut);font-size:15px;line-height:1.65;max-width:420px}
+.case-info .meta{
+  font-family:'Geist Mono';font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mut);line-height:2;border-top:1px solid var(--line);padding-top:18px;
+}
+.case-gallery{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.case-gallery figure{
+  background:#E2E0DB;border-radius:8px;overflow:hidden;position:relative;margin:0;
+}
+.case-gallery .half{aspect-ratio:3/4}
+.case-gallery .full{grid-column:1/-1;aspect-ratio:16/9}
+.case-gallery img,.case-gallery video{width:100%;height:100%;object-fit:cover;display:block}
+.case-gallery figcaption{
+  position:absolute;bottom:10px;left:12px;
+  font-family:'Geist Mono';font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:#fff;mix-blend-mode:difference;
+}
+.case-next{
+  display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:20px;
+  max-width:1600px;margin:0 auto;padding:40px;border-top:1px solid var(--line);
+}
+@media(max-width:1000px){
+  .case{grid-template-columns:1fr;gap:40px;padding:130px 20px 60px}
+  .case-info{position:static}
+  .case-gallery{grid-template-columns:1fr}
+  .case-gallery .half{aspect-ratio:4/5}
+}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;translate:0 40px;transition:opacity .9s,translate .9s cubic-bezier(.19,1,.22,1)}
+.reveal.in{opacity:1;translate:0 0}
+
+@media(max-width:900px){
+  section{padding:90px 20px}
+  nav{padding:14px 20px}
+  nav .links{display:none}
+  .scene{padding:120px 20px 60px}
+  .hero .badge{display:none}
+  .cards{grid-template-columns:1fr}
+  .log-item{grid-template-columns:1fr;gap:8px}
+  .feature .frame{aspect-ratio:16/10}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .reveal{opacity:1;translate:0 0}
+  /* utan animation: heron blir vanliga staplade sektioner */
+  .hero{height:auto}
+  .hero-pin{position:relative;height:auto;overflow:visible}
+  .scene{position:relative;inset:auto;opacity:1;pointer-events:auto;padding:110px 40px}
+  .scene > *{opacity:1;transform:none}
+}
